@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @Entity
@@ -30,5 +31,9 @@ public class Device {
     @Enumerated(EnumType.STRING)
     @Column(name = "device_type", nullable = false)
     private DeviceType deviceType;
+
+    //@OneToMany(fetch = FetchType.LAZY, mappedBy = "device1")
+    //private Set<Purchase> purchaseList;
+
 
 }
