@@ -50,6 +50,8 @@ public class JwtProviderImpl implements JwtProvider{
                 .compact();
 
     }
+
+    @Override
     public Authentication getAuthentication(HttpServletRequest request)
     {
         Claims claims = extractClaims(request);
