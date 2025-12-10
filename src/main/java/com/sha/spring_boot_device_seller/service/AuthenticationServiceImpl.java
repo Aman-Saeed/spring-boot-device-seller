@@ -9,6 +9,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.util.logging.Logger;
+
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService{
 
@@ -21,6 +23,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     @Override
     public User signInAandReturnJWT(User signInRequest)
     {
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(signInRequest.getUsername()
                , signInRequest.getPassword() ));

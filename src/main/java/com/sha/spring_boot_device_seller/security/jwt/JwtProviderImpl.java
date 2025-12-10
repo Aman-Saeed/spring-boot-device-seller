@@ -40,16 +40,15 @@ public class JwtProviderImpl implements JwtProvider{
 
         Key key = Keys.hmacShaKeyFor(JWT_SECRET.getBytes(StandardCharsets.UTF_8));
 
-
         return Jwts.builder()
                 .setSubject(auth.getUsername())
                 .claim("roles", authorities)
                 .claim("userId", auth.getId())
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION_IN_MS))
-                .signWith(key, SignatureAlgorithm.ES512)
+                .signWith(key, SignatureAlgorithm.HS512)  // <-- FIXED HERE
                 .compact();
-
     }
+
 
     @Override
     public Authentication getAuthentication(HttpServletRequest request)

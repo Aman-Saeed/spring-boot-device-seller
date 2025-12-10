@@ -42,18 +42,17 @@ public class SecurityConfig {
         return authConfig.getAuthenticationManager();
     }
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                .cors(cors -> cors.disable())
+                .cors(cors -> {})
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/authentication/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/device").permitAll()
-                        .requestMatchers("/api/device/**").hasRole(Role.ADMIN.name())
+                        .requestMatchers("/api/device/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -66,44 +65,11 @@ public class SecurityConfig {
         return new JwtAuthorizationFilter();
     }
 
-
-
-    // -----------------------------
-    // Password Encoder
-    // -----------------------------
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // -----------------------------
-    // Authentication Manager
-    // -----------------------------
-
-
-    // -----------------------------
-    // Security Filter Chain (new)
-    // -----------------------------
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-        http
-                .cors(cors -> {})        // enable CORS
-                .csrf(csrf -> csrf.disable())
-                .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/authentication/**").permitAll()   // public routes
-                        .anyRequest().authenticated()
-                );
-
-        return http.build();
-    }
-
-    // -----------------------------
-    // CORS Config
-    // -----------------------------
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
@@ -115,5 +81,13 @@ public class SecurityConfig {
             }
         };
     }
+
 }
+
+
+
+
+
+
+
 
