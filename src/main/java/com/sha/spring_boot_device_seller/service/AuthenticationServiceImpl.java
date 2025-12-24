@@ -29,10 +29,14 @@ public class AuthenticationServiceImpl implements AuthenticationService{
                , signInRequest.getPassword() ));
 
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-        String jwt = jwtProvider.generateToken(userPrincipal);
-        signInRequest.setToken(jwt);
 
-        return signInRequest;
+        String jwt = jwtProvider.generateToken(userPrincipal);
+
+        User signInUser = userPrincipal.getUser();
+
+        signInUser.setToken(jwt);
+
+        return signInUser;
     }
 
 }
