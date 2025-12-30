@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @RestController
-@RequestMapping("api/deivces")
+@RequestMapping("api/devices")
 public class DeviceController {
 
     @Autowired
@@ -23,6 +23,10 @@ public class DeviceController {
 
     @PostMapping //api/device
     public ResponseEntity<?> saveDevice(@RequestBody Device device){
+        log.info("calleddd create device ");
+
+        log.info("calleddd create device " + device);
+
         return new ResponseEntity<>(deviceService.saveDevice(device), HttpStatus.CREATED);
     }
 
@@ -37,16 +41,7 @@ public class DeviceController {
     public ResponseEntity<?> getAllDevice()
 
     {
-        log.info("called");
-        log.info("called"); log.info("called");
-        log.info("called");
-        log.info("called");
-        log.info("called");
-        log.info("called");
-        log.info("called");
-        log.info("called");
-        log.info("called");
-        log.info("called");
+
 
         return new ResponseEntity<>(deviceService.findAllDevices(), HttpStatus.OK);
     }
